@@ -57,13 +57,69 @@
 // });
 
 
+// import express from "express";
+// import mongoose from "mongoose";
+// import dotenv from "dotenv";
+// import cors from "cors";
+// import connectDB from "./utils/db.js";
+
+// // Routes
+// import userRoutes from "./routes/userRoutes.js";
+// import adminRoutes from "./routes/adminRoutes.js";
+// import attendanceRoutes from "./routes/attendanceRoutes.js";
+// import accountRoutes from "./routes/accountRoutes.js";
+// import ipCheck from "./middlewares/ipCheck.js";
+// import chatRoutes from "./routes/chatRoutes.js";
+
+// dotenv.config();
+// connectDB();
+
+// const app = express();
+// app.set("trust proxy", true);
+
+// // ✅ Enable CORS
+// app.use(
+//   cors({
+//     origin: [
+//       "http://46.202.167.114",
+//       "https://gitserp.in",
+//       "http://localhost:5173"
+//     ],
+//     methods: ["GET", "POST", "PUT", "DELETE"],
+//     credentials: true,
+//   })
+// );
+
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: true }));
+// app.use(ipCheck);
+
+// // ✅ API Routes
+// app.use("/api/v2/user", userRoutes);
+// app.use("/api/v1/admin", adminRoutes);
+// app.use("/api/v3/attendance", attendanceRoutes);
+// app.use("/api/v4/chat", chatRoutes);
+// app.use("/api/v5/accounts", accountRoutes);
+
+// // ✅ Test route
+// app.get("/", (req, res) => {
+//   res.send("🚀 API is running on Vercel!");
+// });
+
+// // ❌ Remove app.listen (not supported in Vercel)
+// // ✅ Just export the app
+// export default app;
+
+// // ✅ Keep MongoDB connection logging
+// mongoose.connection.on("connected", () => {
+//   console.log("✅ Connected to MongoDB");
+// });
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import connectDB from "./utils/db.js";
 
-// Routes
 import userRoutes from "./routes/userRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import attendanceRoutes from "./routes/attendanceRoutes.js";
@@ -81,9 +137,8 @@ app.set("trust proxy", true);
 app.use(
   cors({
     origin: [
-      "http://46.202.167.114",
-      "https://gitserp.in",
-      "http://localhost:5173"
+      "https://gitserp.in",   // Your frontend live domain (Vercel)
+      "http://localhost:5173" // Local frontend dev
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
@@ -103,14 +158,16 @@ app.use("/api/v5/accounts", accountRoutes);
 
 // ✅ Test route
 app.get("/", (req, res) => {
-  res.send("🚀 API is running on Vercel!");
+  res.send("🚀 API is running on Render!");
 });
 
-// ❌ Remove app.listen (not supported in Vercel)
-// ✅ Just export the app
-export default app;
+// ✅ Start server (Render requires this)
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+});
 
-// ✅ Keep MongoDB connection logging
+// ✅ MongoDB connection log
 mongoose.connection.on("connected", () => {
   console.log("✅ Connected to MongoDB");
 });
