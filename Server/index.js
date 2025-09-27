@@ -137,14 +137,16 @@ app.set("trust proxy", true);
 app.use(
   cors({
     origin: [
-      "https://gitserp.in",                                   // Custom domain
-      "https://gitserp-r3vy5w01o-gits-baea7f60.vercel.app",   // Vercel frontend domain
-      "http://localhost:5173"                                // Local frontend dev
+      "https://gitserp.in",                     // Custom domain
+      "https://gitserp-r3vy5w01o-gits-baea7f60.vercel.app", // Preview deployment
+      "https://gitserp.vercel.app",             // Production Vercel frontend
+      "http://localhost:5173"                   // Local dev
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
